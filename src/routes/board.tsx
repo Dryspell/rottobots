@@ -32,18 +32,17 @@ const generateNeighborStateString = (neighbors: number[]) => {
 	return neighborStateString;
 };
 
+const emptyMatrix = (rows: number, cols: number) =>
+	Array.from(Array(ROW_COUNT).keys()).map(() =>
+		Array.from(Array(COLUMN_COUNT).keys()).map(() => 0)
+	);
+
 const ClearButton = (props: { setState: Setter<number[][]> }) => {
 	return (
 		<button
 			aria-label="clear"
 			class="rounded-full bg-gray-100 border-2 border-gray-300 focus:border-gray-400 active:border-gray-400 px-[2rem] py-[1rem]"
-			onClick={() =>
-				props.setState(
-					Array.from(Array(ROW_COUNT).keys()).map((k) =>
-						Array.from(Array(COLUMN_COUNT).keys()).map((k) => 0)
-					)
-				)
-			}
+			onClick={() => props.setState(emptyMatrix(ROW_COUNT, COLUMN_COUNT))}
 		>
 			Clear
 		</button>
