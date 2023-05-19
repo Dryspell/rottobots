@@ -1,3 +1,5 @@
+import { ButtonPropsColorOverrides } from "@suid/material/Button";
+
 type State = {
 	color: string;
 	default: number;
@@ -11,14 +13,14 @@ export type TransitionTable = State[];
 export const behaviorTable: Record<string, TransitionTable> = {
 	gol: [
 		{
-			color: "white",
+			color: "bg-red-500",
 			default: 0,
 			transitions: {
 				"53": 1,
 			},
 		},
 		{
-			color: "black",
+			color: "bg-green-500",
 			default: 0,
 			transitions: {
 				"62": 1,
