@@ -1,5 +1,4 @@
 import { Accessor, Setter, createSignal } from "solid-js";
-import { Button } from "@suid/material";
 import { behaviorTable } from "../../lib/transitionTables";
 
 const COLUMN_COUNT = 3;
