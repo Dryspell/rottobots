@@ -1,5 +1,3 @@
-import { ButtonPropsColorOverrides } from "@suid/material/Button";
-
 type State = {
 	color: string;
 	default: number;
