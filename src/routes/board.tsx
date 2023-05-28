@@ -56,6 +56,29 @@ const emptyMatrix = (rows: number, cols: number) =>
 		Array.from(Array(cols).keys()).map(() => 0)
 	);
 
+const fillMatrix = (
+	rows: number,
+	cols: number,
+	state: Accessor<number[][]>,
+	setState: Setter<number[][]>
+) => {
+	const oldRowCount = state().length;
+	const oldColumnCount = state()[0].length;
+
+	const rowStart = Math.max(Math.floor((rows - oldRowCount) / 2), 0);
+	const colStart = Math.max(Math.floor((cols - oldColumnCount) / 2), 0);
+
+	const newState = emptyMatrix(rows, cols);
+	for (let ri = 0; ri < rows; ri++) {
+		for (let ci = 0; ci < cols; ci++) {
+			newState[ri + rowStart][ci + colStart] =
+				state()?.[ri + rowStart]?.[ci + colStart] ??
+				Math.round(Math.random());
+		}
+	}
+	setState(newState);
+};
+
 const ClearButton = (props: {
 	setState: Setter<number[][]>;
 	boardConfigs: Accessor<BoardConfigs>;
@@ -135,16 +158,16 @@ const UpdateButton = (props: {
 					newState[ri][ci] = newLocalState;
 
 					// state()[ri][ci] &&
-					console.log(
-						`(${ri}, ${ci}): ${generateNeighborStateString(
-							getNeighbors(
-								ri,
-								ci,
-								props.state,
-								props.boardConfigs().toroidal
-							)
-						)}, newLocalState: ${newLocalState}`
-					);
+					// console.log(
+					// 	`(${ri}, ${ci}): ${generateNeighborStateString(
+					// 		getNeighbors(
+					// 			ri,
+					// 			ci,
+					// 			props.state,
+					// 			props.boardConfigs().toroidal
+					// 		)
+					// 	)}, newLocalState: ${newLocalState}`
+					// );
 				}
 			}
 
@@ -206,6 +229,12 @@ export default function Board() {
 							columnCount: parseInt(e.target.value),
 							rowCount: parseInt(e.target.value),
 						});
+						fillMatrix(
+							boardConfigs().rowCount,
+							boardConfigs().columnCount,
+							state,
+							setState
+						);
 					}}
 				/>
 				<span class="text-2xl px-2">{boardConfigs().rowCount}</span>
