@@ -1,12 +1,16 @@
 import { Accessor, Setter, createSignal } from "solid-js";
 import { behaviorTable } from "../../lib/transitionTables";
 
-const COLUMN_COUNT = 3;
-const ROW_COUNT = 3;
-const TOROIDAL = false;
+const getNeighbors = (
+	i: number,
+	j: number,
+	state: () => number[][],
+	toroidal: boolean
+) => {
+	const ROW_COUNT = state().length;
+	const COLUMN_COUNT = state()[0].length;
 
-const getNeighbors = (i: number, j: number, state: () => number[][]) => {
-	const neighbors = TOROIDAL
+	const neighbors = toroidal
 		? [
 				state()[(i - 1 + ROW_COUNT) % ROW_COUNT][
 					(j - 1 + COLUMN_COUNT) % COLUMN_COUNT
@@ -52,28 +56,42 @@ const emptyMatrix = (rows: number, cols: number) =>
 		Array.from(Array(cols).keys()).map(() => 0)
 	);
 
-const ClearButton = (props: { setState: Setter<number[][]> }) => {
+const ClearButton = (props: {
+	setState: Setter<number[][]>;
+	boardConfigs: Accessor<BoardConfigs>;
+}) => {
 	return (
 		<button
 			aria-label="clear"
 			class="rounded-full bg-gray-100 border-2 border-gray-300 focus:border-gray-400 active:border-gray-400 px-[2rem] py-[1rem]"
-			onClick={() => props.setState(emptyMatrix(ROW_COUNT, COLUMN_COUNT))}
+			onClick={() =>
+				props.setState(
+					emptyMatrix(
+						props.boardConfigs().rowCount,
+						props.boardConfigs().columnCount
+					)
+				)
+			}
 		>
 			Clear
 		</button>
 	);
 };
 
-const RandomizeButton = (props: { setState: Setter<number[][]> }) => (
+const RandomizeButton = (props: {
+	setState: Setter<number[][]>;
+	boardConfigs: Accessor<BoardConfigs>;
+}) => (
 	<button
 		aria-label="randomize"
 		class="rounded-full bg-gray-100 border-2 border-gray-300 focus:border-gray-400 active:border-gray-400 px-[2rem] py-[1rem]"
 		onClick={() =>
 			props.setState(
-				Array.from(Array(ROW_COUNT).keys()).map((k) =>
-					Array.from(Array(COLUMN_COUNT).keys()).map((k) =>
-						Math.round(Math.random())
-					)
+				Array.from(Array(props.boardConfigs().rowCount).keys()).map(
+					(k) =>
+						Array.from(
+							Array(props.boardConfigs().columnCount).keys()
+						).map((k) => Math.round(Math.random()))
 				)
 			)
 		}
@@ -85,6 +103,7 @@ const RandomizeButton = (props: { setState: Setter<number[][]> }) => (
 const UpdateButton = (props: {
 	state: Accessor<number[][]>;
 	setState: Setter<number[][]>;
+	boardConfigs: Accessor<BoardConfigs>;
 }) => (
 	<button
 		aria-label="update state"
@@ -92,11 +111,19 @@ const UpdateButton = (props: {
 		onClick={() => {
 			console.log(`----- UPDATE STATE -----`);
 
-			const newState = emptyMatrix(ROW_COUNT, COLUMN_COUNT);
-			for (let ri = 0; ri < ROW_COUNT; ri++) {
-				for (let ci = 0; ci < COLUMN_COUNT; ci++) {
+			const newState = emptyMatrix(
+				props.boardConfigs().rowCount,
+				props.boardConfigs().columnCount
+			);
+			for (let ri = 0; ri < props.boardConfigs().rowCount; ri++) {
+				for (let ci = 0; ci < props.boardConfigs().columnCount; ci++) {
 					const neighborStateString = generateNeighborStateString(
-						getNeighbors(ri, ci, props.state)
+						getNeighbors(
+							ri,
+							ci,
+							props.state,
+							props.boardConfigs().toroidal
+						)
 					);
 
 					const newLocalState =
@@ -110,7 +137,12 @@ const UpdateButton = (props: {
 					// state()[ri][ci] &&
 					console.log(
 						`(${ri}, ${ci}): ${generateNeighborStateString(
-							getNeighbors(ri, ci, props.state)
+							getNeighbors(
+								ri,
+								ci,
+								props.state,
+								props.boardConfigs().toroidal
+							)
 						)}, newLocalState: ${newLocalState}`
 					);
 				}
@@ -124,10 +156,22 @@ const UpdateButton = (props: {
 	</button>
 );
 
+type BoardConfigs = {
+	columnCount: number;
+	rowCount: number;
+	toroidal: boolean;
+};
+
 export default function Board() {
+	const [boardConfigs, setBoardConfigs] = createSignal({
+		columnCount: 20,
+		rowCount: 20,
+		toroidal: false,
+	});
+
 	const [state, setState] = createSignal<number[][]>(
-		Array.from(Array(ROW_COUNT).keys()).map((k) =>
-			Array.from(Array(COLUMN_COUNT).keys()).map((k) =>
+		Array.from(Array(boardConfigs().rowCount).keys()).map((k) =>
+			Array.from(Array(boardConfigs().columnCount).keys()).map((k) =>
 				Math.round(Math.random())
 			)
 		)
@@ -136,9 +180,35 @@ export default function Board() {
 	return (
 		<div class="">
 			<div class="p-5 flex justify-center">
-				<ClearButton setState={setState} />
-				<RandomizeButton setState={setState} />
-				<UpdateButton state={state} setState={setState} />
+				<ClearButton setState={setState} boardConfigs={boardConfigs} />
+				<RandomizeButton
+					setState={setState}
+					boardConfigs={boardConfigs}
+				/>
+				<UpdateButton
+					state={state}
+					setState={setState}
+					boardConfigs={boardConfigs}
+				/>
+			</div>
+
+			<div class="p-5 flex justify-center">
+				<input
+					type="range"
+					min="0"
+					max="40"
+					value={boardConfigs().rowCount}
+					class="range-primary h-10 w-96 px-2"
+					onInput={(e) => {
+						console.log(e.target.value);
+						setBoardConfigs({
+							...boardConfigs(),
+							columnCount: parseInt(e.target.value),
+							rowCount: parseInt(e.target.value),
+						});
+					}}
+				/>
+				<span class="text-2xl px-2">{boardConfigs().rowCount}</span>
 			</div>
 
 			<div class="p-5 flex justify-center">
@@ -159,7 +229,12 @@ export default function Board() {
 										// state()[ri][ci] &&
 										console.log(
 											`(${ri}, ${ci}): ${generateNeighborStateString(
-												getNeighbors(ri, ci, state)
+												getNeighbors(
+													ri,
+													ci,
+													state,
+													boardConfigs().toroidal
+												)
 											)}`
 										);
 									}}
