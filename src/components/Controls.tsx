@@ -5,7 +5,7 @@ import {
 	getNeighbors,
 } from "~/lib/utils";
 import { Accessor, Setter } from "solid-js";
-import { BoardConfigs } from "~/routes/board";
+import { BoardConfigs } from "~/routes/[behavior]";
 
 export const ClearButton = (props: {
 	setState: Setter<number[][]>;

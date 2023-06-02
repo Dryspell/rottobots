@@ -10,20 +10,35 @@ import {
 	RandomizeButton,
 	UpdateButton,
 } from "~/components/Controls";
+import { useParams, useSearchParams } from "solid-start";
 
 export type BoardConfigs = ReturnType<typeof defaultBoardConfigs>;
 
-export const defaultBoardConfigs = () => {
-	return {
-		columnCount: 20,
-		rowCount: 20,
-		toroidal: false,
-		fillStyle: "dead",
-	};
-};
+export const defaultBoardConfigs = () => ({
+	columnCount: 20,
+	rowCount: 20,
+	toroidal: false,
+	fillStyle: "dead",
+	behavior: "gol",
+	cellShape: null,
+});
 
 export default function Board() {
-	const [boardConfigs, setBoardConfigs] = createSignal(defaultBoardConfigs());
+	const params = useParams<{ behavior: string }>();
+	const [searchParams] = useSearchParams();
+	const cleanSearchParams = Object.fromEntries(
+		Object.entries({ ...searchParams }).map(([k, v]) => [
+			k,
+			parseInt(v) ? parseInt(v) : v,
+		])
+	);
+	console.log({ ...params, ...cleanSearchParams });
+
+	const [boardConfigs, setBoardConfigs] = createSignal({
+		...defaultBoardConfigs(),
+		...params,
+		...cleanSearchParams,
+	});
 
 	const [state, setState] = createSignal<number[][]>(
 		Array.from(Array(boardConfigs().rowCount).keys()).map((k) =>

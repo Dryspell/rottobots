@@ -1,4 +1,12 @@
-import { A, useLocation } from "solid-start";
+import { For } from "solid-js";
+import { A, useLocation, FileRoutes } from "solid-start";
+
+export const ROUTES = [
+	{ path: "/", name: "Home" },
+	{ path: "/about", name: "About" },
+	{ path: "/board", name: "Board" },
+	{ path: "/board_copy", name: "BoardCopy" },
+];
 
 export default function Nav() {
 	const location = useLocation();
@@ -10,15 +18,13 @@ export default function Nav() {
 	return (
 		<nav class="bg-sky-800">
 			<ul class="container flex items-center p-3 text-gray-200">
-				<li class={`border-b-2 ${active("/")} mx-1.5 sm:mx-6`}>
-					<A href="/">Home</A>
-				</li>
-				<li class={`border-b-2 ${active("/about")} mx-1.5 sm:mx-6`}>
-					<A href="/about">About</A>
-				</li>
-				<li class={`border-b-2 ${active("/about")} mx-1.5 sm:mx-6`}>
-					<A href="/board">Board</A>
-				</li>
+				<For each={ROUTES} fallback={<div>No Options...</div>}>
+					{({ path, name }) => (
+						<li class={`border-b-2 ${active(path)} mx-1.5 sm:mx-6`}>
+							<A href={path}>{name}</A>
+						</li>
+					)}
+				</For>
 			</ul>
 		</nav>
 	);
