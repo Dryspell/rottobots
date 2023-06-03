@@ -24,20 +24,24 @@ export const defaultBoardConfigs = () => ({
 });
 
 export default function Board() {
-	const params = useParams<{ behavior: string }>();
 	const [searchParams] = useSearchParams();
-	const cleanSearchParams = Object.fromEntries(
-		Object.entries({ ...searchParams }).map(([k, v]) => [
-			k,
-			parseInt(v) ? parseInt(v) : v,
-		])
-	);
-	console.log({ ...params, ...cleanSearchParams });
+	const params = useParams<{ behavior: string }>();
+	const cParams = Object.fromEntries(
+		Object.entries({ ...searchParams, ...params }).map(([k, v]) =>
+			k === "behavior"
+				? behaviorTable?.[v]
+					? ["behavior", v]
+					: ["behavior", "gol"]
+				: parseInt(v)
+				? [k, parseInt(v) ? parseInt(v) : v]
+				: [k, v]
+		)
+	) as Record<string, string | number>;
+	console.log(cParams);
 
 	const [boardConfigs, setBoardConfigs] = createSignal({
 		...defaultBoardConfigs(),
-		...params,
-		...cleanSearchParams,
+		...cParams,
 	});
 
 	const [state, setState] = createSignal<number[][]>(

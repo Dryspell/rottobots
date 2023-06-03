@@ -23,6 +23,7 @@
 	},
 	"dependencies": {
 		"@prisma/client": "^4.15.0",
+		"@pusher/push-notifications-web": "^1.1.0",
 		"@solidjs/meta": "^0.28.2",
 		"@solidjs/router": "^0.8.2",
 		"@suid/icons-material": "^0.6.2",
