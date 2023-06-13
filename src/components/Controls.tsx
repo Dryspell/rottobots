@@ -78,10 +78,12 @@ export const UpdateButton = (props: {
 					);
 
 					const newLocalState =
-						behaviorTable["gol"][props.state()[ri][ci]].transitions[
-							neighborStateString
-						] ??
-						behaviorTable["gol"][props.state()[ri][ci]].default;
+						behaviorTable[props.boardConfigs().behavior][
+							props.state()[ri][ci]
+						].transitions[neighborStateString] ??
+						behaviorTable[props.boardConfigs().behavior][
+							props.state()[ri][ci]
+						].default;
 
 					newState[ri][ci] = newLocalState;
 

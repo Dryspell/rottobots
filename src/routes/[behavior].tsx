@@ -111,13 +111,18 @@ export default function Board() {
 						<div class="block overflow-hidden p-0">
 							{row.map((value, ci) => (
 								<div
-									class={`${behaviorTable["gol"][value].color} p-0 m-0 rounded-md w-10 h-10 inline-block float-left clear-none`}
+									class={`${
+										behaviorTable[boardConfigs().behavior][
+											value
+										].color
+									} p-0 m-0 rounded-md w-10 h-10 inline-block float-left clear-none`}
 									aria-label="cell"
 									onClick={() => {
 										const newState = [...state()];
 										newState[ri][ci] =
 											(state()[ri][ci] + 1) %
-											behaviorTable["gol"].length;
+											behaviorTable[cParams.behavior]
+												.length;
 										setState(newState);
 
 										// state()[ri][ci] &&
