@@ -2,7 +2,7 @@ import { onMount } from "solid-js";
 import { Chart, Title, Tooltip, Legend, Colors } from "chart.js/auto";
 import { Line } from "solid-chartjs";
 
-const MyChart = () => {
+export default function MyChart() {
 	/**
 	 * You must register optional elements before using the chart,
 	 * otherwise you will have the most primitive UI

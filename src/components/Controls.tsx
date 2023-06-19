@@ -1,5 +1,5 @@
 import { emptyMatrix, fillBoard } from "~/lib/utils";
-import { Accessor, Setter, createSignal } from "solid-js";
+import { Accessor, Setter } from "solid-js";
 import {
 	BoardConfigs,
 	MetaState,
@@ -9,6 +9,7 @@ import { updateState } from "~/lib/updateState";
 import { ButtonGroup, IconButton } from "@suid/material";
 import { FiPause, FiPlay } from "solid-icons/fi";
 import { BiRegularSkipNext } from "solid-icons/bi";
+import { TbPlayerTrackNext } from "solid-icons/tb";
 
 export const ClearButton = (props: {
 	setState: Setter<number[][]>;
@@ -54,10 +55,6 @@ export const RandomizeButton = (props: {
 	</button>
 );
 
-import { TbPlayerTrackNext } from "solid-icons/tb";
-
-import { createTimer } from "@solid-primitives/timer";
-
 export const TimeStateButtonGroup = (props: {
 	state: Accessor<number[][]>;
 	setState: Setter<number[][]>;
@@ -65,19 +62,6 @@ export const TimeStateButtonGroup = (props: {
 	metaState: Accessor<MetaState>;
 	setMetaState: Setter<MetaState>;
 }) => {
-	// createTimer(
-	// 	() => {
-	// 		props.setMetaState(() => ({
-	// 			...props.metaState(),
-	// 			turnNumber: props.metaState().turnNumber + 1,
-	// 		}));
-	// 		console.log(`-- Turn: ${props.metaState().turnNumber} --`);
-	// 		updateState(props.state, props.setState, props.boardConfigs);
-	// 	},
-	// 	() => props.metaState().isPlaying && props.metaState().turnDelay,
-	// 	setInterval
-	// );
-
 	return (
 		<>
 			<ButtonGroup
