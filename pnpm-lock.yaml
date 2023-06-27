@@ -42,7 +42,7 @@ dependencies:
     specifier: ^1.0.8
     version: 1.0.8(solid-js@1.7.7)
   solid-js:
-    specifier: ^1.7.7
+    specifier: ^1.7.5
     version: 1.7.7
   solid-start:
     specifier: ^0.2.26
@@ -51,8 +51,8 @@ dependencies:
     specifier: ^0.2.26
     version: 0.2.26(solid-start@0.2.26)
   solid-three:
-    specifier: ^0.2.0
-    version: 0.2.0(react@17.0.2)(solid-js@1.7.7)(three@0.153.0)
+    specifier: ^0.1.0
+    version: 0.1.0(react@17.0.2)(solid-js@1.7.7)(three@0.153.0)
   three:
     specifier: ^0.153.0
     version: 0.153.0
@@ -5579,8 +5579,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /solid-three@0.2.0(react@17.0.2)(solid-js@1.7.7)(three@0.153.0):
-    resolution: {integrity: sha512-CW3a8OFG8fGdEekdvri/Tx1wu1Mm6gUKI73bOxX0rA349WPoCYq3h1FNGjNS68ec5i2TvPpn7ZC4a3bq/S42fw==}
+  /solid-three@0.1.0(react@17.0.2)(solid-js@1.7.7)(three@0.153.0):
+    resolution: {integrity: sha512-K/6K+wZggHwxjTorzMm9QsrPjNlwdx39ZNR3ecfT37jAOSuBBghizOZ/DGSpal4ppBXqROpctRUaDaJReBwqKA==}
     peerDependencies:
       solid-js: '*'
       three: '*'
