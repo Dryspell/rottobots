@@ -4,12 +4,12 @@ import {
 	BoardConfigs,
 	MetaState,
 	defaultBoardConfigs,
-} from "~/routes/[behavior]";
+} from "~/routes/bots/[behavior]";
 import { updateState } from "~/lib/updateState";
 import { ButtonGroup, IconButton } from "@suid/material";
 import { FiPause, FiPlay } from "solid-icons/fi";
 import { BiRegularSkipNext } from "solid-icons/bi";
-import { TbPlayerTrackNext } from "solid-icons/tb";
+import { TbPlayerTrackNext as FastForwardIcon } from "solid-icons/tb";
 
 export const ClearButton = (props: {
 	setState: Setter<number[][]>;
@@ -81,38 +81,38 @@ export const TimeStateButtonGroup = (props: {
 						/>
 					</IconButton>
 				) : (
-					<IconButton>
-						<FiPause
-							onClick={() =>
-								props.setMetaState(() => ({
-									...props.metaState(),
-									isPlaying: !props.metaState().isPlaying,
-								}))
-							}
-						/>
-					</IconButton>
-				)}
-				<IconButton>
-					<BiRegularSkipNext
+					<IconButton
 						onClick={() =>
-							updateState(
-								props.state,
-								props.setState,
-								props.boardConfigs
-							)
-						}
-					/>
-				</IconButton>
-				<IconButton>
-					<TbPlayerTrackNext
-						onClick={() => {
 							props.setMetaState(() => ({
 								...props.metaState(),
-								turnDelay: props.metaState().turnDelay - 100,
-							}));
-							console.log(props.metaState().turnDelay);
-						}}
-					/>
+								isPlaying: !props.metaState().isPlaying,
+							}))
+						}
+					>
+						<FiPause />
+					</IconButton>
+				)}
+				<IconButton
+					onClick={() =>
+						updateState(
+							props.state,
+							props.setState,
+							props.boardConfigs
+						)
+					}
+				>
+					<BiRegularSkipNext />
+				</IconButton>
+				<IconButton
+					onClick={() => {
+						props.setMetaState(() => ({
+							...props.metaState(),
+							turnDelay: props.metaState().turnDelay - 100,
+						}));
+						console.log(props.metaState().turnDelay);
+					}}
+				>
+					<FastForwardIcon />
 				</IconButton>
 				{/* <button
 					aria-label="update state"

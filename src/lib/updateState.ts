@@ -4,7 +4,7 @@ import {
 	generateNeighborStateString,
 	getNeighbors,
 } from "./utils";
-import { BoardConfigs } from "~/routes/[behavior]";
+import { BoardConfigs } from "~/routes/bots/[behavior]";
 import { behaviorTable } from "./transitionTables";
 
 export const updateState = (

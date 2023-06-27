@@ -1,5 +1,5 @@
 import { Accessor, Setter } from "solid-js";
-import { BoardConfigs } from "~/routes/[behavior]";
+import { BoardConfigs } from "~/routes/bots/[behavior]";
 
 export const getNeighbors = (
 	i: number,

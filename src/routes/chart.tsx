@@ -26,7 +26,7 @@ export default function MyChart() {
 	};
 
 	return (
-		<div>
+		<div class="w-full h-full p-6">
 			<Line
 				data={chartData}
 				options={chartOptions}
@@ -35,4 +35,4 @@ export default function MyChart() {
 			/>
 		</div>
 	);
-};
+}

@@ -1,17 +1,46 @@
 {
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
-		"esModuleInterop": true,
+		"esModuleInterop": false,
 		"target": "ESNext",
 		"module": "ESNext",
 		"moduleResolution": "node",
 		"jsxImportSource": "solid-js",
 		"jsx": "preserve",
 		"strict": true,
-		"types": [],
 		"baseUrl": "./",
 		"paths": {
-			"~/*": ["./src/*"]
+			"~/*": ["./src/*"],
+			"@interfaces/*": ["src/interfaces/*"],
+			"@components/*": ["src/components/*"],
+			"@routes/*": ["src/routes/*"],
+			"@pages/*": ["src/pages/*"],
+			"@styles/*": ["src/styles/*"],
+			"@config/*": ["src/config/*"],
+			"@src/*": ["src/*"],
+			"@assets/*": ["./assets/*"],
+			"@hooks/*": ["src/utils/hooks/*"],
+			"@store/*": ["src/store/*"],
+			"@static/*": ["src/static/*"],
+			"@utils/*": ["src/utils/*"]
+		},
+		"preserveSymlinks": false,
+		"types": ["vite/client"],
+		"useDefineForClassFields": true,
+		"noImplicitAny": false,
+		"isolatedModules": true,
+		"noEmit": true,
+		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+		"allowJs": true,
+		"skipLibCheck": false,
+		"forceConsistentCasingInFileNames": true,
+		"resolveJsonModule": true
+	},
+	"include": ["src", "**/*.ts", "**/*.tsx", "index.js"],
+	"references": [
+		{
+			"path": "./tsconfig.node.json"
 		}
-	}
+	],
+	"exclude": ["node_modules"]
 }
