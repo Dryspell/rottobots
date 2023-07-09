@@ -1,16 +1,15 @@
+import { createTimer } from "@solid-primitives/timer";
 import { createSignal } from "solid-js";
-import { behaviorTable } from "../../lib/transitionTables";
-import { fillBoard } from "~/lib/utils";
-import {
+import { useParams, useSearchParams } from "solid-start";
+import { FillStyleCheckbox ,
 	BoardSizeSlider,
 	ClearButton,
 	RandomizeButton,
 	TimeStateButtonGroup,
-} from "~/components/Controls";
-import { useParams, useSearchParams } from "solid-start";
+} from "../../components/Controls";
+import { behaviorTable } from "../../lib/transitionTables";
 import { Board } from "~/components/Board";
-import { FillStyleCheckbox } from "../../components/Controls";
-import { createTimer } from "@solid-primitives/timer";
+
 import { updateState } from "~/lib/updateState";
 
 export type BoardConfigs = ReturnType<typeof defaultBoardConfigs>;

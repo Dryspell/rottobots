@@ -43,10 +43,10 @@ export const RandomizeButton = (props: {
 		onClick={() =>
 			props.setState(
 				Array.from(Array(props.boardConfigs().rowCount).keys()).map(
-					(k) =>
+					() =>
 						Array.from(
 							Array(props.boardConfigs().columnCount).keys()
-						).map((k) => Math.round(Math.random()))
+						).map(() => Math.round(Math.random()))
 				)
 			)
 		}
@@ -72,20 +72,21 @@ export const TimeStateButtonGroup = (props: {
 				{!props.metaState().isPlaying ? (
 					<IconButton>
 						<FiPlay
-							onClick={() =>
-								props.setMetaState(() => ({
-									...props.metaState(),
-									isPlaying: !props.metaState().isPlaying,
-								}))
-							}
+							// eslint-disable-next-line solid/reactivity
+							onClick={() => {
+								props.setMetaState((prev) => ({
+									...prev,
+									isPlaying: !prev.isPlaying,
+								}));
+							}}
 						/>
 					</IconButton>
 				) : (
 					<IconButton
 						onClick={() =>
-							props.setMetaState(() => ({
-								...props.metaState(),
-								isPlaying: !props.metaState().isPlaying,
+							props.setMetaState((prev) => ({
+								...prev,
+								isPlaying: !prev.isPlaying,
 							}))
 						}
 					>

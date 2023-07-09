@@ -1,6 +1,6 @@
-import { onMount } from "solid-js";
 import { Chart, Title, Tooltip, Legend, Colors } from "chart.js/auto";
 import { Line } from "solid-chartjs";
+import { onMount } from "solid-js";
 
 export default function MyChart() {
 	/**
