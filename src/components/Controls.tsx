@@ -1,15 +1,15 @@
-import { emptyMatrix, fillBoard } from "~/lib/utils";
+import { ButtonGroup, IconButton } from "@suid/material";
+import { BiRegularSkipNext } from "solid-icons/bi";
+import { FiPause, FiPlay } from "solid-icons/fi";
+import { TbPlayerTrackNext as FastForwardIcon } from "solid-icons/tb";
 import { Accessor, Setter } from "solid-js";
+import { updateState } from "~/lib/updateState";
+import { emptyMatrix, fillBoard } from "~/lib/utils";
 import {
 	BoardConfigs,
 	MetaState,
 	defaultBoardConfigs,
 } from "~/routes/bots/[behavior]";
-import { updateState } from "~/lib/updateState";
-import { ButtonGroup, IconButton } from "@suid/material";
-import { FiPause, FiPlay } from "solid-icons/fi";
-import { BiRegularSkipNext } from "solid-icons/bi";
-import { TbPlayerTrackNext as FastForwardIcon } from "solid-icons/tb";
 
 export const ClearButton = (props: {
 	setState: Setter<number[][]>;
